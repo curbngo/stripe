@@ -77,7 +77,11 @@ class Pager
     protected function processRequest(array $parameters = [])
     {
         if ($this->nextToken) {
-            $parameters['starting_after'] = $this->nextToken;
+            if (isset($parameters[0])) {
+                $parameters[0]['starting_after'] = $this->nextToken;
+            } else {
+                $parameters['starting_after'] = $this->nextToken;
+            }
         }
 
         if (array_key_exists(0, $parameters)) {
