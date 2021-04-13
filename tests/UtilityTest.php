@@ -11,20 +11,20 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.3.0
+ * @version    2.4.4
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2019, Cartalyst LLC
- * @link       http://cartalyst.com
+ * @copyright  (c) 2011-2021, Cartalyst LLC
+ * @link       https://cartalyst.com
  */
 
 namespace Cartalyst\Stripe\Tests;
 
 use Cartalyst\Stripe\Stripe;
 use Cartalyst\Stripe\Utility;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class UtilityTest extends PHPUnit_Framework_TestCase
+class UtilityTest extends TestCase
 {
     /** @test */
     public function it_can_prepare_the_parameters_for_the_request()

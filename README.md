@@ -1,6 +1,6 @@
 # PHP library for Stripe, by Cartalyst
 
-[![Build Status](https://travis-ci.org/cartalyst/stripe.svg?branch=2.3)](https://travis-ci.org/cartalyst/stripe)
+[![Build Status](https://travis-ci.com/cartalyst/stripe.svg?branch=2.4)](https://travis-ci.com/cartalyst/stripe)
 
 A comprehensive PHP Library for [Stripe](https://stripe.com/).
 
@@ -21,6 +21,7 @@ Raw files can be found via this projects docs/version branch.
 
 Important versions listed below. Refer to the [Change Log](CHANGELOG.md) for a full history of the project.
 
+- [2.4](CHANGELOG.md) - 2019-12-21
 - [2.3](CHANGELOG.md) - 2019-09-27
 - [2.2](CHANGELOG.md) - 2019-04-21
 - [2.1](CHANGELOG.md) - 2017-05-10
@@ -46,4 +47,4 @@ Bug reports, feature requests, and pull requests can be submitted by following o
 
 This software is released under the [BSD 3-Clause](LICENSE) License.
 
-© 2011-2019 Cartalyst LLC, All rights reserved.
+© 2011-2021 Cartalyst LLC, All rights reserved.

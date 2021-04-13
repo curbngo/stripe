@@ -11,20 +11,22 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.3.0
+ * @version    2.4.4
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2019, Cartalyst LLC
- * @link       http://cartalyst.com
+ * @copyright  (c) 2011-2021, Cartalyst LLC
+ * @link       https://cartalyst.com
  */
 
 namespace Cartalyst\Stripe\Tests;
 
+use BadMethodCallException;
 use Mockery as m;
 use Cartalyst\Stripe\Stripe;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
-class StripeTest extends PHPUnit_Framework_TestCase
+class StripeTest extends TestCase
 {
     /**
      * The Stripe API client instance.
@@ -38,7 +40,7 @@ class StripeTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->stripe = new Stripe('stripe-api-key', '2014-06-17');
     }
@@ -48,7 +50,7 @@ class StripeTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -92,7 +94,7 @@ class StripeTest extends PHPUnit_Framework_TestCase
     {
         $version = $this->stripe->getVersion();
 
-        $this->assertSame('2.3.0', $version);
+        $this->assertSame('2.4.4', $version);
     }
 
     /** @test */
@@ -113,16 +115,15 @@ class StripeTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Cartalyst\\Stripe\\Api\\Customers', $class);
     }
 
-    /**
-     * @test
-     * @expectedException \BadMethodCallException
-     */
+    /** @test */
     public function it_throws_an_exception_when_the_request_is_invalid()
     {
+        $this->expectException(BadMethodCallException::class);
+
         $this->stripe->foo();
     }
 
-    /** @test*/
+    /** @test */
     public function can_retrieve_the_stripe_headers_from_thrown_exception()
     {
         try {
@@ -136,12 +137,12 @@ class StripeTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * @test
-     * @expectedException \RuntimeException
-     */
+    /** @test */
     public function it_throws_an_exception_when_the_api_key_is_not_set()
     {
+        $this->expectException(RuntimeException::class);
+
+        unset($_SERVER['STRIPE_API_KEY']);
         putenv('STRIPE_API_KEY');
 
         $stripe = new Stripe();

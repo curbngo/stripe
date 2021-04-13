@@ -11,16 +11,17 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.3.0
+ * @version    2.4.4
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2019, Cartalyst LLC
- * @link       http://cartalyst.com
+ * @copyright  (c) 2011-2021, Cartalyst LLC
+ * @link       https://cartalyst.com
  */
 
 namespace Cartalyst\Stripe\Tests\Api\Radar;
 
 use Cartalyst\Stripe\Tests\FunctionalTestCase;
+use Cartalyst\Stripe\Exception\NotFoundException;
 
 class ValueListItemsTest extends FunctionalTestCase
 {
@@ -64,12 +65,11 @@ class ValueListItemsTest extends FunctionalTestCase
         $this->assertSame($valueList['id'], $valueListItem['value_list']);
     }
 
-    /**
-     * @test
-     * @expectedException \Cartalyst\Stripe\Exception\NotFoundException
-     */
+    /** @test */
     public function it_will_throw_an_exception_when_searching_for_a_non_existing_value_list_item()
     {
+        $this->expectException(NotFoundException::class);
+
         $this->stripe->radar()->valueListItems()->find(time().rand());
     }
 

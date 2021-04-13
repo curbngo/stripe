@@ -11,16 +11,17 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.3.0
+ * @version    2.4.4
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2019, Cartalyst LLC
- * @link       http://cartalyst.com
+ * @copyright  (c) 2011-2021, Cartalyst LLC
+ * @link       https://cartalyst.com
  */
 
 namespace Cartalyst\Stripe\Tests\Api;
 
 use Cartalyst\Stripe\Tests\FunctionalTestCase;
+use Cartalyst\Stripe\Exception\NotFoundException;
 
 class InvoiceItemsTest extends FunctionalTestCase
 {
@@ -60,12 +61,11 @@ class InvoiceItemsTest extends FunctionalTestCase
         $this->assertSame(3000, $invoiceItem['amount']);
     }
 
-    /**
-     * @test
-     * @expectedException \Cartalyst\Stripe\Exception\NotFoundException
-     */
+    /** @test */
     public function it_can_delete_an_existing_invoice_item()
     {
+        $this->expectException(NotFoundException::class);
+
         $customer = $this->createCustomer();
 
         $invoiceItem = $this->createInvoiceItem($customer['id']);
@@ -89,7 +89,7 @@ class InvoiceItemsTest extends FunctionalTestCase
         $invoiceItems = $this->stripe->invoiceItems()->all();
 
         $this->assertNotEmpty($invoiceItems['data']);
-        $this->assertInternalType('array', $invoiceItems['data']);
+        $this->assertIsArray($invoiceItems['data']);
     }
 
     /** @test */

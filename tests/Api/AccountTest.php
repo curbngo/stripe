@@ -11,11 +11,11 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.3.0
+ * @version    2.4.4
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2019, Cartalyst LLC
- * @link       http://cartalyst.com
+ * @copyright  (c) 2011-2021, Cartalyst LLC
+ * @link       https://cartalyst.com
  */
 
 namespace Cartalyst\Stripe\Tests\Api;
@@ -39,11 +39,16 @@ class AccountTest extends FunctionalTestCase
         $email = $this->getRandomEmail();
 
         $account = $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
         ]);
 
         $this->assertSame($email, $account['email']);
-        $this->assertSame('pending', $account['legal_entity']['verification']['status']);
+        $this->assertSame('unverified', $account['legal_entity']['verification']['status']);
     }
 
     /** @test */
@@ -52,7 +57,12 @@ class AccountTest extends FunctionalTestCase
         $email = $this->getRandomEmail();
 
         $account = $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
         ]);
 
         $email = $account['email'];
@@ -63,7 +73,7 @@ class AccountTest extends FunctionalTestCase
 
         $this->assertSame($accountId, $account['id']);
         $this->assertSame($email, $account['email']);
-        // $this->assertSame('pending', $account['legal_entity']['verification']['status']);
+        $this->assertSame('unverified', $account['legal_entity']['verification']['status']);
     }
 
     /** @test */
@@ -72,7 +82,12 @@ class AccountTest extends FunctionalTestCase
         $email = $this->getRandomEmail();
 
         $account = $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
         ]);
 
         $accountId = $account['id'];
@@ -85,7 +100,7 @@ class AccountTest extends FunctionalTestCase
 
         $this->assertSame($accountId, $account['id']);
         $this->assertSame($email, $account['email']);
-        // $this->assertSame('pending', $account['legal_entity']['verification']['status']);
+        $this->assertSame('unverified', $account['legal_entity']['verification']['status']);
     }
 
     /** @test */
@@ -94,7 +109,12 @@ class AccountTest extends FunctionalTestCase
         $email = $this->getRandomEmail();
 
         $account = $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
         ]);
 
         $accountId = $account['id'];
@@ -107,38 +127,23 @@ class AccountTest extends FunctionalTestCase
     }
 
     /** @test */
-    public function it_can_verify_an_account()
-    {
-        $email = $this->getRandomEmail();
-
-        $account = $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
-        ]);
-
-        $filePath = realpath(__DIR__.'/../files/verify-account.jpg');
-
-        $this->assertSame('pending', $account['legal_entity']['verification']['status']);
-
-        $account = $this->stripe->account()->verify($account['id'], $filePath, 'identity_document');
-
-        // $account = $this->stripe->account()->find($account['id']);
-
-        // $this->assertSame('verified', $account['legal_entity']['verification']['status']);
-    }
-
-    /** @test */
     public function it_can_retrieve_all_accounts()
     {
         $email = $this->getRandomEmail();
 
         $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
         ]);
 
         $accounts = $this->stripe->account()->all();
 
         $this->assertNotEmpty($accounts['data']);
-        $this->assertInternalType('array', $accounts['data']);
+        $this->assertIsArray($accounts['data']);
     }
 
     /** @test */
@@ -147,7 +152,12 @@ class AccountTest extends FunctionalTestCase
         $email = $this->getRandomEmail();
 
         $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
         ]);
 
         $accounts = $this->stripe->accountIterator();
@@ -161,7 +171,12 @@ class AccountTest extends FunctionalTestCase
         $email = $this->getRandomEmail();
 
         $account = $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
         ]);
 
         $accountId = $account['id'];
@@ -181,7 +196,12 @@ class AccountTest extends FunctionalTestCase
         $email = $this->getRandomEmail();
 
         $account = $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
         ]);
 
         $accountId = $account['id'];

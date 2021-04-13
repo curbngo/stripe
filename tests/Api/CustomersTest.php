@@ -11,16 +11,17 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.3.0
+ * @version    2.4.4
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2019, Cartalyst LLC
- * @link       http://cartalyst.com
+ * @copyright  (c) 2011-2021, Cartalyst LLC
+ * @link       https://cartalyst.com
  */
 
 namespace Cartalyst\Stripe\Tests\Api;
 
 use Cartalyst\Stripe\Tests\FunctionalTestCase;
+use Cartalyst\Stripe\Exception\NotFoundException;
 
 class CustomersTest extends FunctionalTestCase
 {
@@ -42,12 +43,11 @@ class CustomersTest extends FunctionalTestCase
         $this->assertSame('john@doe.com', $customer['email']);
     }
 
-    /**
-     * @test
-     * @expectedException \Cartalyst\Stripe\Exception\NotFoundException
-     */
+    /** @test */
     public function it_will_throw_an_exception_when_searching_for_a_non_existing_customer()
     {
+        $this->expectException(NotFoundException::class);
+
         $this->stripe->customers()->find(time());
     }
 
@@ -135,7 +135,7 @@ class CustomersTest extends FunctionalTestCase
         $customers = $this->stripe->customers()->all();
 
         $this->assertNotEmpty($customers['data']);
-        $this->assertInternalType('array', $customers['data']);
+        $this->assertIsArray($customers['data']);
     }
 
     /** @test */

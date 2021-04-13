@@ -11,11 +11,11 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.3.0
+ * @version    2.4.4
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2019, Cartalyst LLC
- * @link       http://cartalyst.com
+ * @copyright  (c) 2011-2021, Cartalyst LLC
+ * @link       https://cartalyst.com
  */
 
 namespace Cartalyst\Stripe\Tests\Api;
@@ -29,9 +29,16 @@ class ExternalAccountsTest extends FunctionalTestCase
     {
         $email = $this->getRandomEmail();
 
-        $accountId = $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
-        ])['id'];
+        $account = $this->stripe->account()->create([
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
+        ]);
+
+        $accountId = $account['id'];
 
         $token = $this->createBankAccountToken();
 
@@ -48,9 +55,16 @@ class ExternalAccountsTest extends FunctionalTestCase
     {
         $email = $this->getRandomEmail();
 
-        $accountId = $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
-        ])['id'];
+        $account = $this->stripe->account()->create([
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
+        ]);
+
+        $accountId = $account['id'];
 
         $token = $this->createBankAccountToken();
 
@@ -69,9 +83,16 @@ class ExternalAccountsTest extends FunctionalTestCase
     {
         $email = $this->getRandomEmail();
 
-        $accountId = $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
-        ])['id'];
+        $account = $this->stripe->account()->create([
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
+        ]);
+
+        $accountId = $account['id'];
 
         $token = $this->createBankAccountToken();
 
@@ -93,9 +114,16 @@ class ExternalAccountsTest extends FunctionalTestCase
     {
         $email = $this->getRandomEmail();
 
-        $accountId = $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
-        ])['id'];
+        $account = $this->stripe->account()->create([
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
+        ]);
+
+        $accountId = $account['id'];
 
         $token = $this->createBankAccountToken();
 
@@ -119,9 +147,16 @@ class ExternalAccountsTest extends FunctionalTestCase
     {
         $email = $this->getRandomEmail();
 
-        $accountId = $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
-        ])['id'];
+        $account = $this->stripe->account()->create([
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
+        ]);
+
+        $accountId = $account['id'];
 
         $token = $this->createBankAccountToken();
 
@@ -132,7 +167,7 @@ class ExternalAccountsTest extends FunctionalTestCase
         $externalAccounts = $this->stripe->externalAccounts()->all($accountId);
 
         $this->assertNotEmpty($externalAccounts['data']);
-        $this->assertInternalType('array', $externalAccounts['data']);
+        $this->assertIsArray($externalAccounts['data']);
     }
 
     /** @test */
@@ -140,9 +175,16 @@ class ExternalAccountsTest extends FunctionalTestCase
     {
         $email = $this->getRandomEmail();
 
-        $accountId = $this->stripe->account()->create([
-            'type' => 'custom', 'email' => $email,
-        ])['id'];
+        $account = $this->stripe->account()->create([
+            'type'                   => 'custom',
+            'email'                  => $email,
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
+        ]);
+
+        $accountId = $account['id'];
 
         $token = $this->createBankAccountToken();
 

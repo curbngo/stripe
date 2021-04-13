@@ -11,16 +11,17 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.3.0
+ * @version    2.4.4
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2019, Cartalyst LLC
- * @link       http://cartalyst.com
+ * @copyright  (c) 2011-2021, Cartalyst LLC
+ * @link       https://cartalyst.com
  */
 
 namespace Cartalyst\Stripe\Tests\Api;
 
 use Cartalyst\Stripe\Tests\FunctionalTestCase;
+use Cartalyst\Stripe\Exception\NotFoundException;
 
 class CustomerTaxIds extends FunctionalTestCase
 {
@@ -58,12 +59,11 @@ class CustomerTaxIds extends FunctionalTestCase
         $this->assertSame($customer['id'], $taxId['customer']);
     }
 
-    /**
-     * @test
-     * @expectedException \Cartalyst\Stripe\Exception\NotFoundException
-     */
+    /** @test */
     public function it_will_throw_an_exception_when_searching_for_a_non_existing_customer_tax()
     {
+        $this->expectException(NotFoundException::class);
+
         $customer = $this->createCustomer();
 
         $this->stripe->customerTaxIds()->find($customer['id'], time());
@@ -97,7 +97,7 @@ class CustomerTaxIds extends FunctionalTestCase
         $taxIds = $this->stripe->customerTaxIds()->all($customer['id']);
 
         $this->assertCount(1, $taxIds['data']);
-        $this->assertInternalType('array', $taxIds['data']);
+        $this->assertIsArray($taxIds['data']);
     }
 
     /** @test */

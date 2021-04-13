@@ -11,21 +11,22 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.3.0
+ * @version    2.4.4
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2019, Cartalyst LLC
- * @link       http://cartalyst.com
+ * @copyright  (c) 2011-2021, Cartalyst LLC
+ * @link       https://cartalyst.com
  */
 
 namespace Cartalyst\Stripe\Tests\Api\Checkout;
 
 use Cartalyst\Stripe\Tests\FunctionalTestCase;
+use Cartalyst\Stripe\Exception\NotFoundException;
 
 class SessionsTest extends FunctionalTestCase
 {
     /** @test */
-    public function it_can_create_a_new_session()
+    public function it_can_create_a_new_session_with_a_single_item()
     {
         $session = $this->stripe->checkout()->sessions()->create([
             'cancel_url' => 'http://example.com/cancel',
@@ -43,6 +44,42 @@ class SessionsTest extends FunctionalTestCase
         ]);
 
         $this->assertCount(1, $session['display_items']);
+        $this->assertSame('http://example.com/cancel', $session['cancel_url']);
+        $this->assertSame('http://example.com/success', $session['success_url']);
+    }
+
+    /** @test */
+    public function it_can_create_a_new_session_with_multiple_items()
+    {
+        $session = $this->stripe->checkout()->sessions()->create([
+            'cancel_url' => 'http://example.com/cancel',
+            'success_url' => 'http://example.com/success',
+            'payment_method_types' => ['card'],
+            'mode' => 'payment',
+            'line_items' => [
+                [
+                    'price_data' => [
+                        'currency' => 'usd',
+                        'product_data' => [
+                            'name' => 'T-shirt',
+                        ],
+                        'unit_amount' => 2000,
+                    ],
+                    'quantity' => 1,
+                ],
+                [
+                    'price_data' => [
+                        'currency' => 'usd',
+                        'product_data' => [
+                            'name' => 'T-shirt',
+                        ],
+                        'unit_amount' => 2000,
+                    ],
+                    'quantity' => 1,
+                ],
+            ],
+        ]);
+
         $this->assertSame('http://example.com/cancel', $session['cancel_url']);
         $this->assertSame('http://example.com/success', $session['success_url']);
     }
@@ -72,12 +109,11 @@ class SessionsTest extends FunctionalTestCase
         $this->assertSame('http://example.com/success', $session['success_url']);
     }
 
-    /**
-     * @test
-     * @expectedException \Cartalyst\Stripe\Exception\NotFoundException
-     */
+    /** @test */
     public function it_will_throw_an_exception_when_searching_for_a_non_existing_session()
     {
+        $this->expectException(NotFoundException::class);
+
         $this->stripe->checkout()->sessions()->find(time().rand());
     }
 }

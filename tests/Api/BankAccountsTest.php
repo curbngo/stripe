@@ -11,16 +11,17 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.3.0
+ * @version    2.4.4
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2019, Cartalyst LLC
- * @link       http://cartalyst.com
+ * @copyright  (c) 2011-2021, Cartalyst LLC
+ * @link       https://cartalyst.com
  */
 
 namespace Cartalyst\Stripe\Tests\Api;
 
 use Cartalyst\Stripe\Tests\FunctionalTestCase;
+use Cartalyst\Stripe\Exception\NotFoundException;
 
 class BankAccountsTest extends FunctionalTestCase
 {
@@ -60,12 +61,11 @@ class BankAccountsTest extends FunctionalTestCase
         $this->assertSame('110000000', $bankAccount['routing_number']);
     }
 
-    /**
-     * @test
-     * @expectedException \Cartalyst\Stripe\Exception\NotFoundException
-     */
+    /** @test */
     public function it_will_throw_an_exception_when_searching_for_a_non_existing_card()
     {
+        $this->expectException(NotFoundException::class);
+
         $customer = $this->createCustomer();
 
         $this->stripe->bankAccounts()->find($customer['id'], time().rand());
@@ -138,7 +138,7 @@ class BankAccountsTest extends FunctionalTestCase
 
         $this->assertNotEmpty($bankAccounts['data']);
         $this->assertCount(1, $bankAccounts['data']);
-        $this->assertInternalType('array', $bankAccounts['data']);
+        $this->assertIsArray($bankAccounts['data']);
     }
 
     /** @test */

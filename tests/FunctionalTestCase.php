@@ -11,19 +11,19 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.3.0
+ * @version    2.4.4
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2019, Cartalyst LLC
- * @link       http://cartalyst.com
+ * @copyright  (c) 2011-2021, Cartalyst LLC
+ * @link       https://cartalyst.com
  */
 
 namespace Cartalyst\Stripe\Tests;
 
 use Cartalyst\Stripe\Stripe;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class FunctionalTestCase extends PHPUnit_Framework_TestCase
+class FunctionalTestCase extends TestCase
 {
     /**
      * The Stripe API instance.
@@ -35,7 +35,7 @@ class FunctionalTestCase extends PHPUnit_Framework_TestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->stripe = new Stripe();
     }
@@ -77,6 +77,24 @@ class FunctionalTestCase extends PHPUnit_Framework_TestCase
         ]);
     }
 
+    protected function createPrice($productId, $recurring = true)
+    {
+        $parameters = [
+            'product'     => $productId,
+            'unit_amount' => 1500,
+            'currency'    => 'USD',
+        ];
+
+        if($recurring) {
+            $parameters['recurring'] = [
+                'interval'       => 'week',
+                'interval_count' => '2',
+            ];
+        }
+
+        return $this->stripe->prices()->create($parameters);
+    }
+
     protected function createSku($productId)
     {
         return $this->stripe->skus()->create([
@@ -98,9 +116,9 @@ class FunctionalTestCase extends PHPUnit_Framework_TestCase
     {
         return $this->stripe->tokens()->create([
             'card' => [
-                'exp_month' => 10,
+                'exp_month' => date('m'),
                 'cvc'       => 314,
-                'exp_year'  => 2020,
+                'exp_year'  => date('Y', strtotime('+1 year')),
                 'number'    => '4242424242424242',
             ],
         ]);
@@ -145,9 +163,9 @@ class FunctionalTestCase extends PHPUnit_Framework_TestCase
     {
         return $this->stripe->cards()->create($customerId, [
             'source' => [
-                'exp_month' => 10,
+                'exp_month' => date('m'),
                 'cvc'       => 314,
-                'exp_year'  => 2020,
+                'exp_year'  => date('Y', strtotime('+1 year')),
                 'number'    => '4242424242424242',
                 'currency'  => 'usd',
             ],

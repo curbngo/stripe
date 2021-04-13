@@ -11,11 +11,11 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.3.0
+ * @version    2.4.4
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
- * @copyright  (c) 2011-2019, Cartalyst LLC
- * @link       http://cartalyst.com
+ * @copyright  (c) 2011-2021, Cartalyst LLC
+ * @link       https://cartalyst.com
  */
 
 namespace Cartalyst\Stripe\Tests\Api;
@@ -31,8 +31,8 @@ class BalanceTest extends FunctionalTestCase
 
         $this->assertSame('usd', $current['pending'][0]['currency']);
         $this->assertSame('usd', $current['available'][0]['currency']);
-        $this->assertInternalType('int', $current['pending'][0]['amount']);
-        $this->assertInternalType('int', $current['available'][0]['amount']);
+        $this->assertIsInt($current['pending'][0]['amount']);
+        $this->assertIsInt($current['available'][0]['amount']);
     }
 
     /** @test */
@@ -40,6 +40,6 @@ class BalanceTest extends FunctionalTestCase
     {
         $transactions = $this->stripe->balance()->all();
 
-        $this->assertInternalType('array', $transactions['data']);
+        $this->assertIsArray($transactions['data']);
     }
 }
