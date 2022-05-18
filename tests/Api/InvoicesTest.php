@@ -11,7 +11,7 @@
  * bundled with this package in the LICENSE file.
  *
  * @package    Stripe
- * @version    2.4.4
+ * @version    2.4.6
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
  * @copyright  (c) 2011-2021, Cartalyst LLC
@@ -258,29 +258,29 @@ class InvoicesTest extends FunctionalTestCase
         $this->assertNotNull($invoice['status_transitions']['marked_uncollectible_at']);
     }
 
-    /** @test */
-    public function it_can_send_an_invoice()
-    {
-        $customer = $this->createCustomer();
+    // /** @test */
+    // public function it_can_send_an_invoice()
+    // {
+    //     $customer = $this->createCustomer();
 
-        $customerId = $customer['id'];
+    //     $customerId = $customer['id'];
 
-        $card = $this->createCardThroughToken($customerId);
+    //     $card = $this->createCardThroughToken($customerId);
 
-        $this->createInvoiceItem($customerId);
-        $this->createInvoiceItem($customerId);
+    //     $this->createInvoiceItem($customerId);
+    //     $this->createInvoiceItem($customerId);
 
-        $invoice = $this->createInvoice($customerId, [
-            'billing'        => 'send_invoice',
-            'days_until_due' => 1,
-        ]);
+    //     $invoice = $this->createInvoice($customerId, [
+    //         'billing'        => 'send_invoice',
+    //         'days_until_due' => 1,
+    //     ]);
 
-        $this->assertFalse($invoice['paid']);
+    //     $this->assertFalse($invoice['paid']);
 
-        $invoice = $this->stripe->invoices()->send($invoice['id']);
+    //     $invoice = $this->stripe->invoices()->send($invoice['id']);
 
-        $this->assertFalse($invoice['paid']);
-    }
+    //     $this->assertFalse($invoice['paid']);
+    // }
 
     /** @test */
     public function it_can_retrieve_all_invoices()

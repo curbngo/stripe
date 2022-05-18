@@ -11,6 +11,18 @@ We do not give estimated times for completion on `Accepted` Proposals.
 
 ---
 
+### v2.4.6 - 2021-10-09
+
+`UPDATED`
+
+- Refunds API was updated to work with Payment Intents.
+
+### v2.4.5 - 2021-04-15
+
+`FIXED`
+
+- Allow currencies to be also defined as lowercase.
+
 ### v2.4.4 - 2021-02-18
 
 `ADDED`
