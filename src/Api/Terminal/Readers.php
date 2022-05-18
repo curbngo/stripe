@@ -79,4 +79,28 @@ class Readers extends Api
     {
         return $this->_get('terminal/readers', $parameters);
     }
+
+    /**
+     * Initiates a payment flow on a Reader.
+     *
+     * @param  string  $readerId
+     * @param  array  $parameters
+     * @return array
+     */
+    public function processPaymentIntent($readerId, array $parameters = [])
+    {
+        return $this->_post("terminal/readers/{$readerId}/process_payment_intent", $parameters);
+    }
+
+    /**
+     * Cancels the current reader action.
+     *
+     * @param  string  $readerId
+     * @param  array  $parameters
+     * @return array
+     */
+    public function cancelAction($readerId, array $parameters = [])
+    {
+        return $this->_post("terminal/readers/{$readerId}/cancel_action", $parameters);
+    }
 }
