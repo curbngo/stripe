@@ -103,4 +103,16 @@ class Readers extends Api
     {
         return $this->_post("terminal/readers/{$readerId}/cancel_action", $parameters);
     }
+
+    /**
+     * Refunds a payment on a Reader.
+     *
+     * @param  string  $readerId
+     * @param  array  $parameters
+     * @return array
+     */
+    public function refundPayment($readerId, array $parameters = [])
+    {
+        return $this->_post("terminal/readers/{$readerId}/refund_payment", $parameters);
+    }
 }
