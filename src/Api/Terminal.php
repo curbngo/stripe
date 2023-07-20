@@ -51,4 +51,14 @@ class Terminal extends Api
     {
         return new Terminal\Readers($this->config);
     }
+
+    /**
+     * Returns a terminal configurations api instance.
+     *
+     * @return \Cartalyst\Stripe\Api\Terminal\Configurations
+     */
+    public function configurations()
+    {
+        return new Terminal\Configurations($this->config);
+    }
 }
