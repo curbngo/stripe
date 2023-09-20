@@ -115,4 +115,16 @@ class Readers extends Api
     {
         return $this->_post("terminal/readers/{$readerId}/refund_payment", $parameters);
     }
+
+    /**
+     * Sets reader display to show cart details.
+     *
+     * @param  string  $readerId
+     * @param  array  $parameters
+     * @return array
+     */
+    public function setReaderDisplay($readerId, array $parameters = [])
+    {
+        return $this->_post("terminal/readers/{$readerId}/set_reader_display", $parameters);
+    }
 }
