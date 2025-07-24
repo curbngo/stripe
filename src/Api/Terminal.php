@@ -61,4 +61,44 @@ class Terminal extends Api
     {
         return new Terminal\Configurations($this->config);
     }
+
+    /**
+     * Returns a terminal device deploy groups api instance.
+     *
+     * @return \Cartalyst\Stripe\Api\Terminal\DeviceDeployGroups
+     */
+    public function deviceDeployGroups()
+    {
+        return new Terminal\DeviceDeployGroups($this->config);
+    }
+
+    /**
+     * Returns a terminal device assets api instance.
+     *
+     * @return \Cartalyst\Stripe\Api\Terminal\DeviceAssets
+     */
+    public function deviceAssets()
+    {
+        return new Terminal\DeviceAssets($this->config);
+    }
+
+    /**
+     * Returns a terminal device asset versions api instance.
+     *
+     * @return \Cartalyst\Stripe\Api\Terminal\DeviceAssetVersions
+     */
+    public function deviceAssetVersions()
+    {
+        return new Terminal\DeviceAssetVersions($this->config);
+    }
+
+    /**
+     * Returns a terminal deploy plans api instance.
+     *
+     * @return \Cartalyst\Stripe\Api\Terminal\DeployPlans
+     */
+    public function deployPlans()
+    {
+        return new Terminal\DeployPlans($this->config);
+    }
 }
